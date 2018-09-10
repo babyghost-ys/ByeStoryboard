@@ -57,4 +57,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = "no storyboard is cool"
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = DetailViewController()
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
