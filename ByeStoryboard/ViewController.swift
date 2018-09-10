@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     //Create the table view with code
     let mainTableView: UITableView = {
-        let tableView = UITableView(frame: UIScreen.main.bounds)
+        let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         
         //Add the table view to the view controller
         view.addSubview(mainTableView)
+        setupLayout()
         
         //Setup the view title
         navigationItem.title = "Bye Storyboard!"
@@ -40,12 +41,10 @@ class ViewController: UIViewController {
     func setupLayout() {
         let constraints = [mainTableView.topAnchor.constraint(equalTo: view.topAnchor), mainTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor), mainTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),  mainTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)]
         NSLayoutConstraint.activate(constraints)
-        
-        mainTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
     }
 }
 
-//MARK: The table view delegates and data source
+//MARK: Table view delegates and data source
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,12 +53,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.textLabel?.text = "no storyboard is cool"
+        cell.textLabel?.text = "no storyboard is cool \(indexPath.row)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = DetailViewController()
+        
+        detailVC.detailLabel.text = "You have clicked item \(indexPath.row)"
+        
         self.navigationController?.pushViewController(detailVC, animated: true)
     }
 }
